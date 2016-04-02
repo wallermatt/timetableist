@@ -1,0 +1,387 @@
+
+
+
+<script src="jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<link href="jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
+<script src="Fixed-Header-Table-master/jquery.fixedheadertable.min.js"></script>
+
+
+<script type="text/javascript" src="test_tournament_data.js"></script>
+
+
+ 
+ 
+<!-- CSS -->
+<style type="text/css">
+
+body {
+	font-size: 10;
+	font-family: arial;
+	background-color: white;
+	
+}
+
+.square {
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    float: left;
+    background-color: lightblue;
+    cursor: pointer;
+    font-weight: bold;
+	border-radius: 5px;
+}
+ 
+.squaredotted {
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px dotted gray;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    float: left;
+    color: gray;
+    background-color: sandybrown;
+	border-radius: 5px;
+}
+
+#unassigned_games {
+    width: 200px;
+    height: 500px;
+    line-height: 300px;
+    border: 1px dotted gray;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    float: left;
+    color: black;
+    background-color: lightgray;
+	border-radius: 25px;
+}
+
+th {
+width: 30px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px dotted gray;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+	float: left;
+    color: black;
+    background-color: lightgray;
+	font-size: 8pt;
+}
+
+td {
+width: 30px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px dotted gray;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    float: left;
+    color: gray;
+    background-color: white;
+	font-size: 8pt;
+}
+
+
+
+
+
+</style>
+
+<body class="ui-layout-center">
+<h1>Timetablist v0.1</h1>
+
+<div>
+<div id="unassigned_games" class="droppable" style="float:left">
+    <h2 style="height: 30px;line-height: 30px;">Unassigned Games</h2>
+    
+    
+</div>
+<div id="timetable" style="float:left;margin-left:50px;">
+	<h2>Timetable</h2>
+	
+
+</div>
+
+<div style="float: left; margin-left: 50px;">
+	<h2>Team Schedules</h2>
+<div id="ft_header"></div>
+<div id="final_timetable" style="height: 500px; overflow: scroll; background-color: white;">
+	
+	<table id="ftable" style="">
+		
+<thead>
+<tr></tr>
+</thead>
+
+		<tbody>
+			
+			
+	
+		
+		</tbody>
+	</table>
+<div>
+</div>
+</div>
+</body> 
+ 
+<!-- Javascript -->
+<script>
+
+
+// Build final timetable
+$("#final_timetable table thead tr").append("<th>Team</th>");
+for (t=0; t < TIMES.length; t++) {
+	$("#final_timetable table thead tr").append("<th>" + TIMES[t] + "</th>");	
+}
+$("#final_timetable table thead tr").append("<th>#</th>");
+
+for (var team in TEAMS) {
+
+	var backgroundColor = GROUPS[TEAMS[team]["group"]]["background-color"];
+	row_id = "r" + team;
+	var $tr = $("<tr>", {id: row_id});
+	$("#final_timetable table tbody").append($tr);
+	$("#" + row_id).append("<td team='true'><b>" + team + "</b></td>");
+	$("#" + row_id).find("td").css("background-color", backgroundColor);
+	$("#" + row_id).find("td").css("color", "black");
+	for (t=0; t < TIMES.length; t++) {
+		var $td = $("<td>", {id: row_id + "t" + t, pitch: false});
+		$("#" + row_id).append($td);
+	}
+	var $td = $("<td>", {id: row_id + "g"});
+	$("#" + row_id).append($td);
+}
+
+// Build Slots
+var slotCount = 1;
+for (t=0; t < TIMES.length; t++){
+	for (p=0; p < PITCHES.length; p++){
+		var slot_id = "s" + slotCount;
+		SLOTS[slot_id] = {"start_time": t, "pitch": p, "game": 0}; 
+		var $div = $("<div>", {id: slot_id, class: "droppable squaredotted", text: TIMES[t] + '-' + PITCHES[p]});
+		$("#timetable").append($div);
+		slotCount++;
+	}
+	$("#timetable").append('<div style="clear:both"></div>');
+} 
+
+// Build Games
+var gameCount = 1;
+for (var team in TEAMS) {
+	var backgroundColor = GROUPS[TEAMS[team]["group"]]["background-color"];
+	var opponents = TEAMS[team]['opponents'];
+	for (op=0; op < opponents.length; op++) {
+		var gameExists = false;
+		for (var game in GAMES) {
+			var teams = GAMES[game]['teams'];
+			if (teams.indexOf(team) >= 0 && teams.indexOf(opponents[op]) >= 0) {
+				gameExists = true;
+			}
+		}
+		if (gameExists == false) {
+			var game_id = "g" + gameCount;
+			GAMES[game_id] = {"teams": [team, opponents[op]], "group": TEAMS[team]["group"], "slot": 0};
+			
+			var $div = $("<div>", {id: game_id, class: "square", text: team + '-' + opponents[op]});
+			$div.css("background-color", backgroundColor);
+			$("#unassigned_games").append($div);
+			
+			gameCount++;
+		}
+	}
+
+}
+
+updateTeamSchedules = function() {
+	// set all slots for each team to zero
+	var row = [];
+	for (t=0; t < TIMES.length; t++) {
+		row.push('_');
+	}
+	for (var team in TEAMS) {
+		//FINALTT.push(row);
+		var new_schedule = row.slice();
+		TEAMS[team]["schedule"] = new_schedule;	
+	}
+	for (slot in SLOTS) {
+		var game = SLOTS[slot]["game"];
+		var start_time =  SLOTS[slot]["start_time"];
+		var pitch = SLOTS[slot]["pitch"];
+		if (game != 0) {
+			var game_teams = GAMES[game]["teams"];
+			for (t=0; t < game_teams.length; t++) {
+				TEAMS[game_teams[t]]["schedule"][start_time] = pitch;
+				//alert(game_teams[t]);
+			}
+		}
+	
+	}
+}
+
+displayFinalTimetable = function() {
+	
+	for (var team in TEAMS) {
+		var schedule = TEAMS[team]["schedule"];
+		var total_games = 0;
+		for (s=0; s < schedule.length; s++) {
+			var td_id = "#r" + team + "t" + s;
+			if (schedule[s] == "_") {
+				$(td_id).text('');
+				$(td_id).attr("pitch", 'false');
+			} else {
+				$(td_id).text(PITCHES[schedule[s]]);
+				$(td_id).attr("pitch", 'true');
+				total_games++;
+			}
+		}
+		var td_id = "#r" + team + "g";
+		$(td_id).text(total_games);
+		if (total_games >= GAMES_PER_TEAM) {
+			//$("#r" + team).children().css("background-color", "lightgreen");
+			$("#r" + team).find("td[pitch='true']").css("background-color", "lightgreen");
+			$("#r" + team).find("td[pitch='false']").css("background-color", "white");
+		} else {
+			$("#r" + team).find("td[pitch='true']").css("background-color", "lightgrey");
+			$("#r" + team).find("td[pitch='false']").css("background-color", "white");
+		}
+	}
+}
+
+
+/*
+updateFinalTimetable = function() {
+	$("td[start_time]").text("");
+	$("td.total_games").text("0");
+	for (var slot in SLOTS){
+		var game = SLOTS[slot]["game"];
+		var start_time = SLOTS[slot]["start_time"];
+		var pitch = SLOTS[slot]["pitch"];
+		if (game != 0){
+			var game_teams = GAMES[game]["teams"];			
+			for (var team in TEAMS){
+				row = $("tr[team='" + team + "']");
+				if (game_teams.indexOf(team) >= 0) {					
+					row.find("td[start_time='" + start_time + "']").text(pitch);
+					var total_games = parseInt(row.find("td.total_games").text());
+					total_games++;
+					row.find("td.total_games").text(total_games);
+				
+					if (total_games == GAMES_PER_TEAM){
+						row.children().css("background-color", "lightgreen");
+					} else {
+						row.children().css("background-color", "lightgrey");
+					}
+				} 
+			}	
+		}	
+	}
+}
+*/
+
+$(function () {
+        $(".square").draggable({
+                snap: ".squaredotted",
+                snapMode: "inner",
+				opacity: 0.5,
+				revert: "invalid",
+				//stop: function() {alert("stop");},
+        });
+});
+
+
+getStartTimes = function(teams) {
+	var start_times = [];
+	for (t=0; t < teams.length; t++) {
+		var schedule = TEAMS[teams[t]]["schedule"];
+		for (s=0; s < schedule.length; s++) {
+			if (schedule[s] != "_") {
+				start_times.push(s);
+			}
+		}
+	}
+	return start_times;
+}
+
+$(function () {
+	$(".droppable").droppable({
+	
+				accept: function(el) {
+					var slot_id = $(this).prop("id");
+					if (slot_id == "unassigned_games") {return true;}
+					var game_id = $(el).prop("id");
+					var old_slot = GAMES[game_id]["slot"];
+					var teams = GAMES[game_id]["teams"];
+					var start_times = getStartTimes(teams);					
+					var current_time = SLOTS[slot_id]["start_time"];
+					if (start_times.indexOf(current_time) >= 0) {						
+						if (old_slot != 0) {
+							var old_start_time = SLOTS[old_slot]["start_time"];
+							if (old_start_time == current_time) {
+								return true;
+							}
+						}
+							
+						return false;
+
+					}
+					return true;
+				},
+	
+				drop: function( event, ui ) {
+											
+							
+												var game = $(ui.draggable).prop("id");
+												var slot = $(this).prop("id");
+												var old_slot = GAMES[game]["slot"];
+
+												if (slot != "unassigned_games") {
+													if (slot != old_slot && old_slot != 0) {
+														SLOTS[old_slot]["game"] = 0;
+														$('#' + old_slot).droppable({disabled: false});	
+													};
+													GAMES[game]["slot"] = slot;
+													SLOTS[slot]["game"] = game;
+													$(this).droppable({disabled: true});
+												} else {
+													if (old_slot != 0) {
+														SLOTS[old_slot]["game"] = 0;
+														$('#' + old_slot).droppable({disabled: false});
+														GAMES[game]["slot"] = 0;	
+													};
+
+												};
+												updateTeamSchedules();
+												displayFinalTimetable();
+												
+											},
+	});
+});
+
+$(document).ready(function() {
+	//$('#ftable').fixedHeaderTable('show');
+});
+
+
+
+
+
+
+
+</script>
+ 
+
+
+
