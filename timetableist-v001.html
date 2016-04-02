@@ -93,6 +93,10 @@ width: 30px;
 	font-size: 8pt;
 }
 
+.button_wrapper {
+	margin-bottom: 1em;
+}
+
 
 
 
@@ -103,6 +107,13 @@ width: 30px;
 <h1>Timetablist v0.1</h1>
 
 <div>
+
+	<div class="button_wrapper">
+		<button id="load_tournament">Load Tournament</button>
+		<button id="save_tournament">Save Tournament</button>
+		<button id="create_tournament">Create Final Schedule</button>
+	</div>
+
 <div id="unassigned_games" class="droppable" style="float:left">
     <h2 style="height: 30px;line-height: 30px;">Unassigned Games</h2>
     
@@ -374,7 +385,15 @@ $(document).ready(function() {
 	//$('#ftable').fixedHeaderTable('show');
 });
 
-
+// Button handler
+  $(function() {
+    $( "button" )
+      .button()
+      .click(function( event ) {
+		var button_id = $(this).prop("id");
+        alert(button_id);
+      });
+  });
 
 
 
