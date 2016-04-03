@@ -308,7 +308,8 @@ $(function () {
                 snapMode: "inner",
 				opacity: 0.5,
 				revert: "invalid",
-				//stop: function() {alert("stop");},
+				//stop: function(event, ui) {var os = 
+				//						   alert("stop");},
         });
 });
 
@@ -385,13 +386,30 @@ $(document).ready(function() {
 	//$('#ftable').fixedHeaderTable('show');
 });
 
+saveTournament = function() {
+	var os = $("#s27").offset();
+	alert(JSON.stringify(os));
+}
+
+//{"top":202.3000030517578,"left":364}
+
+loadTournament = function() {
+	var os = JSON.parse('{"top":202,"left":364}');
+	alert(JSON.stringify(os));
+	$("#g15").offset(os);
+}
+
 // Button handler
   $(function() {
     $( "button" )
       .button()
       .click(function( event ) {
 		var button_id = $(this).prop("id");
-        alert(button_id);
+        if (button_id == "save_tournament") {
+			saveTournament();
+		} else if (button_id == "load_tournament") {
+			loadTournament();
+		}
       });
   });
 
