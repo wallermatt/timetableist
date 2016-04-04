@@ -5,8 +5,6 @@
 <script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <link href="jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
 <script src="Fixed-Header-Table-master/jquery.fixedheadertable.min.js"></script>
-
-
 <script type="text/javascript" src="test_tournament_data.js"></script>
 
 
@@ -14,93 +12,87 @@
  
 <!-- CSS -->
 <style type="text/css">
+    body {
+            font-size: 10;
+            font-family: arial;
+            background-color: white;
 
-body {
-	font-size: 10;
-	font-family: arial;
-	background-color: white;
-	
-}
+    }
 
-.square {
-    width: 40px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px solid black;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    text-align: center;
-    float: left;
-    background-color: lightblue;
-    cursor: pointer;
-    font-weight: bold;
-	border-radius: 5px;
-}
- 
-.squaredotted {
-    width: 40px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px dotted gray;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    text-align: center;
-    float: left;
-    color: gray;
-    background-color: sandybrown;
-	border-radius: 5px;
-}
+    .square {
+        width: 40px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px solid black;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+        float: left;
+        background-color: lightblue;
+        cursor: pointer;
+        font-weight: bold;
+            border-radius: 5px;
+    }
 
-#unassigned_games {
-    width: 200px;
-    height: 500px;
-    line-height: 300px;
-    border: 1px dotted gray;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    text-align: center;
-    float: left;
-    color: black;
-    background-color: lightgray;
-	border-radius: 25px;
-}
+    .squaredotted {
+        width: 40px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px dotted gray;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+        float: left;
+        color: gray;
+        background-color: sandybrown;
+            border-radius: 5px;
+    }
 
-th {
-width: 30px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px dotted gray;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    text-align: center;
-	float: left;
-    color: black;
-    background-color: lightgray;
-	font-size: 8pt;
-}
+    #unassigned_games {
+        width: 200px;
+        height: 500px;
+        line-height: 300px;
+        border: 1px dotted gray;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+        float: left;
+        color: black;
+        background-color: lightgray;
+            border-radius: 25px;
+    }
 
-td {
-width: 30px;
-    height: 20px;
-    line-height: 20px;
-    border: 1px dotted gray;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    text-align: center;
-    float: left;
-    color: gray;
-    background-color: white;
-	font-size: 8pt;
-}
+    th {
+    width: 30px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px dotted gray;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+            float: left;
+        color: black;
+        background-color: lightgray;
+            font-size: 8pt;
+    }
 
-.button_wrapper {
-	margin-bottom: 1em;
-}
+    td {
+    width: 30px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px dotted gray;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+        float: left;
+        color: gray;
+        background-color: white;
+            font-size: 8pt;
+    }
 
-
-
-
-
+    .button_wrapper {
+            margin-bottom: 1em;
+    }
 </style>
 
 <body class="ui-layout-center">
@@ -144,6 +136,8 @@ width: 30px;
 		</tbody>
 	</table>
 <div>
+</div>
+</div>
 </div>
 </div>
 </body> 
@@ -394,9 +388,13 @@ saveTournament = function() {
 //{"top":202.3000030517578,"left":364}
 
 loadTournament = function() {
-	var os = JSON.parse('{"top":202,"left":364}');
-	alert(JSON.stringify(os));
-	$("#g15").offset(os);
+	var pos = $("#s27").offset();
+        alert(pos);
+        $("#g15").offset(pos);
+        var pos2 = JSON.stringify($("#g15").offset());
+        alert(pos2);
+        updateTeamSchedules();
+	displayFinalTimetable();
 }
 
 // Button handler
