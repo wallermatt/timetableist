@@ -377,12 +377,16 @@ $(function () {
 });
 
 $(document).ready(function() {
-	//$('#ftable').fixedHeaderTable('show');
+	LOAD_TOURNAMENT = sessionStorage.LOAD_TOURNAMENT;
+	if (LOAD_TOURNAMENT == 'true') {
+		loadTournament();
+		sessionStorage.setItem('LOAD_TOURNAMENT', 'false');
+	}
 });
 
 saveTournament = function() {
 	sessionStorage.setItem('SLOTS', JSON.stringify(SLOTS));
-        sessionStorage.setItem('GAMES', JSON.stringify(GAMES));
+    sessionStorage.setItem('GAMES', JSON.stringify(GAMES));
 }
 
 //{"top":202.3000030517578,"left":364}
@@ -410,7 +414,9 @@ loadTournament = function() {
         if (button_id == "save_tournament") {
 			saveTournament();
 		} else if (button_id == "load_tournament") {
-			loadTournament();
+			//loadTournament();
+			sessionStorage.setItem('LOAD_TOURNAMENT', 'true');
+			location.reload();
 		}
       });
   });
