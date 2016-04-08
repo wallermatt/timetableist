@@ -381,18 +381,22 @@ $(document).ready(function() {
 });
 
 saveTournament = function() {
-	var os = $("#s27").offset();
-	alert(JSON.stringify(os));
+	sessionStorage.setItem('SLOTS', JSON.stringify(SLOTS));
+        sessionStorage.setItem('GAMES', JSON.stringify(GAMES));
 }
 
 //{"top":202.3000030517578,"left":364}
 
 loadTournament = function() {
-	var pos = $("#s27").offset();
-        alert(pos);
-        $("#g15").offset(pos);
-        var pos2 = JSON.stringify($("#g15").offset());
-        alert(pos2);
+    
+        SLOTS = JSON.parse(sessionStorage.SLOTS);
+        GAMES = JSON.parse(sessionStorage.GAMES);
+        for (var slot in SLOTS) {
+            if (SLOTS[slot]["game"] != 0) {
+                var os = $("#" + slot).offset();
+                $("#" + SLOTS[slot]["game"]).offset(os);
+            }           
+        }
         updateTeamSchedules();
 	displayFinalTimetable();
 }
