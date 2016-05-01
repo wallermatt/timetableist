@@ -61,7 +61,7 @@
             border-radius: 25px;
     }
 
-    th {
+    .th {
     width: 30px;
         height: 20px;
         line-height: 20px;
@@ -123,12 +123,10 @@
 	
 	<table id="ftable" style="">
 		
-<thead>
-<tr></tr>
-</thead>
+
 
 		<tbody>
-			
+		<tr></tr>	
 			
 	
 		
@@ -145,12 +143,12 @@
 <script>
 
 
-// Build final timetable
-$("#final_timetable table thead tr").append("<th>Team</th>");
+// Build bfinal timetable
+$("#final_timetable table tbody tr").append("<td class='th'>Team</td>");
 for (t=0; t < TIMES.length; t++) {
-	$("#final_timetable table thead tr").append("<th>" + TIMES[t] + "</th>");	
+	$("#final_timetable table tbody tr").append("<td class='th'>" + TIMES[t] + "</td>");	
 }
-$("#final_timetable table thead tr").append("<th>#</th>");
+$("#final_timetable table tbody tr").append("<td class='th'>#</td>");
 
 for (var team in TEAMS) {
 
