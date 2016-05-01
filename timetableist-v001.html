@@ -163,6 +163,8 @@ for (var team in TEAMS) {
 	$tr.append($td);
 	//$tr.find("td").css("background-color", backgroundColor);
 	//$tr.find("td").css("color", "black");
+	$td.css("background-color", backgroundColor);
+	$td.css("color", "black");
 	for (t=0; t < TIMES.length; t++) {
 		var $td = $("<td>", {id: row_id + "t" + t, pitch: false});
 		$tr.append($td);
