@@ -4,7 +4,6 @@
 <script src="jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
 <script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <link href="jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
-<script src="Fixed-Header-Table-master/jquery.fixedheadertable.min.js"></script>
 <script type="text/javascript" src="test_tournament_data.js"></script>
 
 
@@ -159,15 +158,17 @@ for (var team in TEAMS) {
 	row_id = "r" + team;
 	var $tr = $("<tr>", {id: row_id});
 	$("#final_timetable table tbody").append($tr);
-	$("#" + row_id).append("<td team='true'><b>" + team + "</b></td>");
-	$("#" + row_id).find("td").css("background-color", backgroundColor);
-	$("#" + row_id).find("td").css("color", "black");
+	//$tr.append("<td team='true'><b>" + team + "</b></td>");
+	var $td = $("<td>", {text: team});
+	$tr.append($td);
+	//$tr.find("td").css("background-color", backgroundColor);
+	//$tr.find("td").css("color", "black");
 	for (t=0; t < TIMES.length; t++) {
 		var $td = $("<td>", {id: row_id + "t" + t, pitch: false});
-		$("#" + row_id).append($td);
+		$tr.append($td);
 	}
 	var $td = $("<td>", {id: row_id + "g"});
-	$("#" + row_id).append($td);
+	$tr.append($td);
 }
 
 // Build Slots
