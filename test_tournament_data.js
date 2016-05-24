@@ -30,73 +30,73 @@ var TEAMS = {
 			"schedule": [],
 		  },
 	"4": {
-			"name": "Badgers",
+			"name": "Comets Yellow",
 			"group": "White",
 			"opponents": ["5", "6", "7", "8"],
 			"schedule": [],
 		  },
 	"5": {
-			"name": "Tecumsehs",
+			"name": "Meteor 3s",
 			"group": "White",
 			"opponents": ["1", "2", "3", "4"],
 			"schedule": [],
 		  },
 	"6": {
-			"name": "Mighty Douche",
+			"name": "Mouse Rat",
 			"group": "White",
 			"opponents": ["1", "2", "3", "4"],
 			"schedule": [],
 		  },
 	"7": {
-			"name": "Loan Wolves",
+			"name": "Tornados",
 			"group": "White",
 			"opponents": ["1", "2", "3", "4"],
 			"schedule": [],
 		  },
 	"8": {
-			"name": "Badgers",
+			"name": "Tribold",
 			"group": "White",
 			"opponents": ["1", "2", "3", "4"],
 			"schedule": [],
 		  },
 	"9": {
-			"name": "Tecumsehs",
+			"name": "Oblivion",
 			"group": "Blue",
 			"opponents": ["13", "14", "15", "16"],
 			"schedule": [],
 		  },
 	"10": {
-			"name": "Mighty Douche",
+			"name": "Base Invaders",
 			"group": "Blue",
 			"opponents": ["13", "14", "15", "16"],
 			"schedule": [],
 		  },
 	"11": {
-			"name": "Loan Wolves",
+			"name": "Base Jumpers",
 			"group": "Blue",
 			"opponents": ["13", "14", "15", "16"],
 			"schedule": [],
 		  },
 	"12": {
-			"name": "Badgers",
+			"name": "Richmond Swingers",
 			"group": "Blue",
 			"opponents": ["13", "14", "15", "16"],
 			"schedule": [],
 		  },
 	"13": {
-			"name": "Tecumsehs",
+			"name": "Chargers",
 			"group": "Blue",
 			"opponents": ["9", "10", "11", "12"],
 			"schedule": [],
 		  },
 	"14": {
-			"name": "Mighty Douche",
+			"name": "BBG",
 			"group": "Blue",
 			"opponents": ["9", "10", "11", "12"],
 			"schedule": [],
 		  },
 	"15": {
-			"name": "Loan Wolves",
+			"name": "Knights",
 			"group": "Blue",
 			"opponents": ["9", "10", "11", "12"],
 			"schedule": [],
@@ -108,49 +108,49 @@ var TEAMS = {
 			"schedule": [],
 		  },
 	"17": {
-			"name": "Tecumsehs",
+			"name": "Comets Orange",
 			"group": "Red",
 			"opponents": ["21", "22", "23", "24"],
 			"schedule": [],
 		  },
 	"18": {
-			"name": "Mighty Douche",
+			"name": "Mescalitos",
 			"group": "Red",
 			"opponents": ["21", "22", "23", "24"],
 			"schedule": [],
 		  },
 	"19": {
-			"name": "Loan Wolves",
+			"name": "PIs",
 			"group": "Red",
 			"opponents": ["21", "22", "23", "24"],
 			"schedule": [],
 		  },
 	"20": {
-			"name": "Badgers",
+			"name": "Odd Sox",
 			"group": "Red",
 			"opponents": ["21", "22", "23", "24"],
 			"schedule": [],
 		  },
 	"21": {
-			"name": "Tecumsehs",
+			"name": "Dazzlers",
 			"group": "Red",
 			"opponents": ["17", "18", "19", "20"],
 			"schedule": [],
 		  },
 	"22": {
-			"name": "Mighty Douche",
+			"name": "Thundercats",
 			"group": "Red",
 			"opponents": ["17", "18", "19", "20"],
 			"schedule": [],
 		  },
 	"23": {
-			"name": "Loan Wolves",
+			"name": "SPAM",
 			"group": "Red",
 			"opponents": ["17", "18", "19", "20"],
 			"schedule": [],
 		  },
 	"24": {
-			"name": "Badgers",
+			"name": "LNZ",
 			"group": "Red",
 			"opponents": ["17", "18", "19", "20"],
 			"schedule": [],
@@ -161,7 +161,7 @@ var SLOTS = {};
 
 var GAMES = {};
 
-var FINALTT = [];
+//var downloadTournament = {};
 
 
 

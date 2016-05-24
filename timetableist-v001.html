@@ -448,11 +448,11 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     
     //1st loop is to extract each row
     //for (var i = 0; i < arrData.length; i++) {
-      for (var slot in arrData) {
+      for (var entry in arrData) {
         var row = "";
         //2nd loop will extract each column and convert it in string comma-seprated
-        for (var index in arrData[slot]) {
-            row += '"' + arrData[slot][index] + '",';
+        for (var index in arrData[entry]) {
+            row += '"' + arrData[entry][index] + '",';
         }
 
         row.slice(0, row.length - 1);
@@ -467,7 +467,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     }   
     
     //Generate a file name
-    var fileName = "MyReport_";
+    var fileName = "tournament";
     //this will remove the blank-spaces from the title and replace it with an underscore
     fileName += ReportTitle.replace(/ /g,"_");   
     
@@ -493,10 +493,51 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     document.body.removeChild(link);
 }
 
+// loop at slot
+// get time
+// get pitch
+// select game
+// get grade
+// get team1
+// get team2
+
+// FINALTT = time, pitch, grade, team1, team2
+
+createDownloadTournament = function() {
+	var downloadTournament = {};
+	for (slot in SLOTS) {
+		var start_time = TIMES[SLOTS[slot]["start_time"]];
+		var pitch = PITCHES[SLOTS[slot]["pitch"]];
+		var game = SLOTS[slot]["game"];
+		
+		if (game != 0) {
+			var teams = GAMES[game]['teams'];
+			var team1 = TEAMS[teams[0]]['name'];
+			var team2 = TEAMS[teams[1]]['name'];
+			var group = GAMES[game]['group'];
+		} else {
+			var team1 = team2 = group = '_';
+		}
+		
+		downloadTournament[slot] = {'slot': slot,
+									'game': game,
+									'start_time': start_time, 
+									'pitch': pitch, 
+									'group': group, 
+									'team1': team1, 
+									'team2': team2};
+	}
+	return downloadTournament;
+}
+
 
 createTournament = function() {
+
+	var downloadTournament = createDownloadTournament();
+	//alert(downloadTournament);
 	//JSONToCSVConvertor(GAMES, "games", false);
-	JSONToCSVConvertor(SLOTS, "slots", true);
+	JSONToCSVConvertor(downloadTournament, "Tournament", true);
+	//alert('end');
 }
 
 // Button handler
