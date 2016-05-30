@@ -1,6 +1,7 @@
 
 
 
+
 <script src="jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
 <script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <link href="jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
@@ -30,7 +31,6 @@
         background-color: lightblue;
         cursor: pointer;
         font-weight: bold;
-            border-radius: 5px;
     }
 
     .squaredotted {
@@ -44,7 +44,19 @@
         float: left;
         color: gray;
         background-color: sandybrown;
-            border-radius: 5px;
+    }
+    
+        .squareheaders {
+        width: 40px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px dotted gray;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        text-align: center;
+        float: left;
+        color: black;
+        background-color: lightgray;
     }
 
     #unassigned_games {
@@ -57,8 +69,7 @@
         text-align: center;
         float: left;
         color: black;
-        background-color: lightgray;
-            border-radius: 25px;
+        background-color: white;
     }
 
     .th {
@@ -180,10 +191,23 @@ for (var team in TEAMS) {
 	$tr.append($td);
 }
 
+// Build pitch labels
+var $div = $("<div>", {class: "squareheaders", text: ''});
+$("#timetable").append($div);
+
+for (p=0; p < PITCHES.length; p++) {
+    var $div = $("<div>", {class: "squareheaders", text: PITCHES[p]});
+    $("#timetable").append($div);
+}
+$("#timetable").append('<div style="clear:both"></div>');
+
 // Build Slots
 var slotCount = 1;
 for (t=0; t < TIMES.length; t++){
+        var $div = $("<div>", {class: "squareheaders", text: TIMES[t]});
+        $("#timetable").append($div);
 	for (p=0; p < PITCHES.length; p++){
+		// build time label if p=0
 		var slot_id = "s" + slotCount;
 		SLOTS[slot_id] = {"start_time": t, "pitch": p, "game": 0}; 
 		var $div = $("<div>", {id: slot_id, class: "droppable squaredotted", text: TIMES[t] + '-' + PITCHES[p]});
@@ -467,9 +491,9 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     }   
     
     //Generate a file name
-    var fileName = "tournament";
+    //var fileName = "tournament";
     //this will remove the blank-spaces from the title and replace it with an underscore
-    fileName += ReportTitle.replace(/ /g,"_");   
+    var fileName = ReportTitle.replace(/ /g,"_");   
     
     //Initialize file format you want csv or xls
     var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
