@@ -419,8 +419,10 @@ $(document).ready(function() {
 });
 
 saveTournament = function() {
-	sessionStorage.setItem('SLOTS', JSON.stringify(SLOTS));
-    sessionStorage.setItem('GAMES', JSON.stringify(GAMES));
+	//sessionStorage.setItem('SLOTS', JSON.stringify(SLOTS));
+    //sessionStorage.setItem('GAMES', JSON.stringify(GAMES));
+	var saveData = createSaveData();
+	JSONToCSVConvertor(saveData, "save_tournament_file", false);
 }
 
 //{"top":202.3000030517578,"left":364}
@@ -553,6 +555,20 @@ createDownloadTournament = function() {
 	}
 	return downloadTournament;
 }
+
+createSaveData = function() {
+	var saveData = {};
+	for (slot in SLOTS) {
+		
+		var game = SLOTS[slot]["game"];
+		
+		saveData[slot] = {'slot': slot,
+						  'game': game};
+	}
+	return saveData;
+}
+
+
 
 
 createTournament = function() {
